@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Public Mail By Nicho</string>
+    <string name="icon_description">main icon</string>
+    <string name="username_text">Username</string>
+    <string name="hint_username_edit_view">Example: Clara</string>
+    <string name="button_inbox_text">Check Inbox</string>
 </resources>
