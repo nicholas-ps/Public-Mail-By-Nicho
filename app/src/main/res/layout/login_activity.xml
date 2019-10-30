@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimaryDark"
-    tools:context=".view.MainActivity">
+    tools:context=".view.LoginActivity">
 
     <ImageView
         android:id="@+id/main_icon"
@@ -72,6 +72,7 @@
         android:textColor="@color/colorWhite"
         android:textStyle="bold"
         android:padding="5dp"
-        android:width="150dp" />
+        android:width="150dp"
+        android:onClick="onClickCheckInbox"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

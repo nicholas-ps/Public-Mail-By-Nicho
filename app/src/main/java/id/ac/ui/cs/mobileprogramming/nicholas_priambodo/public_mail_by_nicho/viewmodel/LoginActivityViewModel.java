@@ -15,12 +15,16 @@ public class LoginActivityViewModel extends AndroidViewModel {
         this.db = AppDatabase.getDatabase(application);
     }
 
-    public void createUser(String username, String domain_email) {
+    public void resetDatabase() {
         this.db.clearAllTables();
+    }
+
+    public void createUser(String username, String domain_email) {
+        resetDatabase();
 
         User user = new User();
         user.username = username;
-        user.email = username + "@" + domain_email;
+        user.email = username + "@" + domain_email + ".com";
 
         this.db.userDao().insertUser(user);
     }
