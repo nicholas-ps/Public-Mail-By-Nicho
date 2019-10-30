@@ -7,7 +7,7 @@ import androidx.room.Query;
 @Dao
 public interface UserDao {
     @Insert
-    public void insertUser(User user);
+    void insertUser(User user);
 
     @Query(
             "SELECT * " +
@@ -15,5 +15,5 @@ public interface UserDao {
             "WHERE username = :username " +
             "LIMIT 1"
     )
-    public User getUserByUsername(String username);
+    User getUserByUsername(String username);
 }
