@@ -5,7 +5,7 @@ import android.app.Application;
 import androidx.lifecycle.AndroidViewModel;
 
 import id.ac.ui.cs.mobileprogramming.nicholas_priambodo.public_mail_by_nicho.model.AppDatabase;
-import id.ac.ui.cs.mobileprogramming.nicholas_priambodo.public_mail_by_nicho.model.User;
+import id.ac.ui.cs.mobileprogramming.nicholas_priambodo.public_mail_by_nicho.model.user.User;
 
 public class LoginViewModel extends AndroidViewModel {
     private AppDatabase db;

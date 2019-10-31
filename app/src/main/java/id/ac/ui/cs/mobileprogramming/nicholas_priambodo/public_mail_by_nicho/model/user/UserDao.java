@@ -1,4 +1,4 @@
-package id.ac.ui.cs.mobileprogramming.nicholas_priambodo.public_mail_by_nicho.model;
+package id.ac.ui.cs.mobileprogramming.nicholas_priambodo.public_mail_by_nicho.model.user;
 
 import androidx.room.Dao;
 import androidx.room.Insert;
