@@ -2,9 +2,9 @@ package id.ac.ui.cs.mobileprogramming.nicholas_priambodo.public_mail_by_nicho.vi
 
 import android.app.Application;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.MutableLiveData;
 
 import java.util.List;
 
@@ -15,6 +15,15 @@ import id.ac.ui.cs.mobileprogramming.nicholas_priambodo.public_mail_by_nicho.mod
 public class InboxViewModel extends AndroidViewModel {
     private AppDatabase db;
     private WebServicePublicMailByNicho webService;
+    private MutableLiveData<List<Email>> live_list_email;
+
+    public MutableLiveData<List<Email>> getLiveListEmail() {
+        if (this.live_list_email == null) {
+            this.live_list_email = new MutableLiveData<>();
+        }
+
+        return this.live_list_email;
+    }
 
     public InboxViewModel(Application application) {
         super(application);
@@ -24,6 +33,7 @@ public class InboxViewModel extends AndroidViewModel {
 
     public void getInboxFromWebService() {
         String username = this.db.userDao().getUser().username;
+
         this.webService.getInbox(
                 username,
                 new CallBackResponse() {
@@ -35,16 +45,21 @@ public class InboxViewModel extends AndroidViewModel {
             );
     }
 
-    private class AsyncTaskSaveEmail extends AsyncTask<List<Email>, Void, Void> {
+    private class AsyncTaskSaveEmail extends AsyncTask<List<Email>, Void, List<Email>> {
         @Override
-        protected Void doInBackground(List<Email>... l) {
+        protected List<Email> doInBackground(List<Email>... l) {
             List<Email> list_email = l[0];
 
             for (Email email : list_email) {
                 db.emailDao().insertEmail(email);
             }
 
-            return null;
+            return list_email;
+        }
+
+        @Override
+        protected void onPostExecute(List<Email> list_email) {
+            live_list_email.setValue(list_email);
         }
     }
 }
