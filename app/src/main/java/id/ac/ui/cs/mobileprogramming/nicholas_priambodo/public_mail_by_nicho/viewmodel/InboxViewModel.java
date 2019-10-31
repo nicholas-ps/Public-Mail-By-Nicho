@@ -1,14 +1,16 @@
 package id.ac.ui.cs.mobileprogramming.nicholas_priambodo.public_mail_by_nicho.viewmodel;
 
 import android.app.Application;
-import android.widget.Toast;
+import android.os.AsyncTask;
+import android.util.Log;
 
 import androidx.lifecycle.AndroidViewModel;
 
-import org.json.JSONArray;
+import java.util.List;
 
 import id.ac.ui.cs.mobileprogramming.nicholas_priambodo.public_mail_by_nicho.model.AppDatabase;
 import id.ac.ui.cs.mobileprogramming.nicholas_priambodo.public_mail_by_nicho.model.WebServicePublicMailByNicho;
+import id.ac.ui.cs.mobileprogramming.nicholas_priambodo.public_mail_by_nicho.model.email.Email;
 
 public class InboxViewModel extends AndroidViewModel {
     private AppDatabase db;
@@ -26,10 +28,23 @@ public class InboxViewModel extends AndroidViewModel {
                 username,
                 new CallBackResponse() {
                     @Override
-                    public void callBack(JSONArray response) {
-                        Toast.makeText(getApplication(), response.toString(), Toast.LENGTH_SHORT).show();
+                    public void execute(List<Email> list_email) {
+                        new AsyncTaskSaveEmail().execute(list_email);
                     }
                 }
             );
+    }
+
+    private class AsyncTaskSaveEmail extends AsyncTask<List<Email>, Void, Void> {
+        @Override
+        protected Void doInBackground(List<Email>... l) {
+            List<Email> list_email = l[0];
+
+            for (Email email : list_email) {
+                db.emailDao().insertEmail(email);
+            }
+
+            return null;
+        }
     }
 }

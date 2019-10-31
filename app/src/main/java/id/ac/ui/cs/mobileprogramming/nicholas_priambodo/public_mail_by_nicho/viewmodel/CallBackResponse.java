@@ -1,7 +1,9 @@
 package id.ac.ui.cs.mobileprogramming.nicholas_priambodo.public_mail_by_nicho.viewmodel;
 
-import org.json.JSONArray;
+import java.util.List;
+
+import id.ac.ui.cs.mobileprogramming.nicholas_priambodo.public_mail_by_nicho.model.email.Email;
 
 public interface CallBackResponse {
-    public void callBack(JSONArray response);
+    public void execute(List<Email> list_email);
 }
