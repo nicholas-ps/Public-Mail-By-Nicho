@@ -5,12 +5,9 @@ import androidx.room.Entity;
 
 @Entity(
         tableName = "User",
-        primaryKeys = {"username", "email"}
+        primaryKeys = {"username"}
 )
 public class User {
     @NonNull
     public String username;
-
-    @NonNull
-    public String email;
 }

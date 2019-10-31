@@ -3,6 +3,7 @@ package id.ac.ui.cs.mobileprogramming.nicholas_priambodo.public_mail_by_nicho.vi
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -10,11 +11,11 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import id.ac.ui.cs.mobileprogramming.nicholas_priambodo.public_mail_by_nicho.R;
-import id.ac.ui.cs.mobileprogramming.nicholas_priambodo.public_mail_by_nicho.viewmodel.LoginActivityViewModel;
+import id.ac.ui.cs.mobileprogramming.nicholas_priambodo.public_mail_by_nicho.viewmodel.LoginViewModel;
 
 public class LoginActivity extends AppCompatActivity {
     private EditText username_edit_text;
-    private LoginActivityViewModel loginActivityViewModel;
+    private LoginViewModel loginActivityViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,7 +23,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.login_activity);
 
         this.username_edit_text = findViewById(R.id.username_edit_text);
-        this.loginActivityViewModel = ViewModelProviders.of(this).get(LoginActivityViewModel.class);
+        this.loginActivityViewModel = ViewModelProviders.of(this).get(LoginViewModel.class);
     }
 
     public void onClickCheckInbox(View view) {
@@ -39,16 +40,14 @@ public class LoginActivity extends AppCompatActivity {
     private class AsyncTaskLogin extends AsyncTask<String, Void, Void> {
         @Override
         protected Void doInBackground(String... s) {
-            String username = s[0];
-            String domain_email = getResources().getString(R.string.domain_email);
-
-            loginActivityViewModel.createUser(username, domain_email);
+            loginActivityViewModel.createUser(s[0]);
             return null;
         }
 
         @Override
         protected void onPostExecute(Void v) {
-            //TODO start new activity: list email
+            Intent intent = new Intent(LoginActivity.this, InboxActivity.class);
+            startActivity(intent);
         }
     }
 }

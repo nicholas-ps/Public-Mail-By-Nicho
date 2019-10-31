@@ -12,8 +12,7 @@ public interface UserDao {
     @Query(
             "SELECT * " +
             "FROM User " +
-            "WHERE username = :username " +
             "LIMIT 1"
     )
-    User getUserByUsername(String username);
+    User getUser();
 }
