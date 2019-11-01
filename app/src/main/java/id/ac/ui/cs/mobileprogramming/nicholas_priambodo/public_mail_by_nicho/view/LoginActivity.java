@@ -20,10 +20,34 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.login_activity);
 
-        this.username_edit_text = findViewById(R.id.username_edit_text);
         this.loginActivityViewModel = ViewModelProviders.of(this).get(LoginViewModel.class);
+
+        new AsyncTaskCheckUser().execute();
+    }
+
+    private void startInboxActivity() {
+        Intent intent = new Intent(LoginActivity.this, InboxActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    private class AsyncTaskCheckUser extends AsyncTask<Void, Void, Boolean> {
+        @Override
+        protected Boolean doInBackground(Void... v) {
+            return loginActivityViewModel.isUserExists();
+        }
+
+        @Override
+        protected void onPostExecute(Boolean exists) {
+            if (!exists) {
+                setContentView(R.layout.login_activity);
+                username_edit_text = findViewById(R.id.username_edit_text);
+            }
+            else {
+                startInboxActivity();
+            }
+        }
     }
 
     public void onClickCheckInbox(View view) {
@@ -32,7 +56,8 @@ public class LoginActivity extends AppCompatActivity {
         if (text.equals("")) {
             String warning_empty_text = getResources().getString(R.string.warning_empty_text);
             Toast.makeText(this, warning_empty_text, Toast.LENGTH_SHORT).show();
-        } else {
+        }
+        else {
             new AsyncTaskLogin().execute(text);
         }
     }
@@ -46,8 +71,7 @@ public class LoginActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Void v) {
-            Intent intent = new Intent(LoginActivity.this, InboxActivity.class);
-            startActivity(intent);
+            startInboxActivity();
         }
     }
 }

@@ -27,4 +27,8 @@ public class LoginViewModel extends AndroidViewModel {
 
         this.db.userDao().insertUser(user);
     }
+
+    public boolean isUserExists() {
+        return this.db.userDao().getUser() != null;
+    }
 }

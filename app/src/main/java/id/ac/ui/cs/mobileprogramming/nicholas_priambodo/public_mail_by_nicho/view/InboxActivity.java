@@ -4,8 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
@@ -69,6 +71,26 @@ public class InboxActivity extends AppCompatActivity {
         protected Void doInBackground(Void... v) {
             inboxViewModel.getInboxFromWebService();
             return null;
+        }
+    }
+
+    public void onClickExitIcon(View view) {
+        new AsyncTaskDeleteAllData().execute();
+    }
+
+    private class AsyncTaskDeleteAllData extends AsyncTask<Void, Void, Void> {
+        @Override
+        public Void doInBackground(Void... v) {
+            inboxViewModel.deleteAllData();
+            return null;
+        }
+
+        @Override
+        public void onPostExecute(Void v) {
+            startActivity(
+                    new Intent(InboxActivity.this, LoginActivity.class)
+            );
+            finish();
         }
     }
 }

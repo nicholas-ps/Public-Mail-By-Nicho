@@ -33,6 +33,10 @@ public class InboxViewModel extends AndroidViewModel {
         return this.live_list_email;
     }
 
+    public void deleteAllData() {
+        this.db.clearAllTables();
+    }
+
     public void getInboxFromWebService() {
         String username = this.db.userDao().getUser().username;
 
