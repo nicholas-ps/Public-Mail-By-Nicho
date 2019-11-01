@@ -1,12 +1,13 @@
 package id.ac.ui.cs.mobileprogramming.nicholas_priambodo.public_mail_by_nicho.view;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
 
 import java.util.List;
 
@@ -16,17 +17,17 @@ import id.ac.ui.cs.mobileprogramming.nicholas_priambodo.public_mail_by_nicho.vie
 
 public class InboxActivity extends AppCompatActivity {
     private InboxViewModel inboxViewModel;
-    private MutableLiveData<List<Email>> live_list_email;
+    private ListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.inbox_activity);
 
+        this.listView = findViewById(R.id.inbox);
         this.inboxViewModel = ViewModelProviders.of(this).get(InboxViewModel.class);
-        this.live_list_email = this.inboxViewModel.getLiveListEmail();
 
-        this.live_list_email.observe(
+        this.inboxViewModel.getLiveListEmail().observe(
                 this,
                 new Observer<List<Email>>() {
                     @Override
@@ -40,7 +41,27 @@ public class InboxActivity extends AppCompatActivity {
     }
 
     private void updateInbox() {
-        //TODO implement here
+        String[] from = {
+                "sender",
+                "subject",
+                "content_preview"
+        };
+
+        int[] to = {
+                R.id.sender,
+                R.id.subject_email,
+                R.id.content_preview
+        };
+
+        SimpleAdapter simpleAdapter = new SimpleAdapter(
+                this,
+                this.inboxViewModel.getListEmailInListHash(),
+                R.layout.list_email,
+                from,
+                to
+        );
+
+        this.listView.setAdapter(simpleAdapter);
     }
 
     private class AsyncTaskInbox extends AsyncTask<Void, Void, Void> {

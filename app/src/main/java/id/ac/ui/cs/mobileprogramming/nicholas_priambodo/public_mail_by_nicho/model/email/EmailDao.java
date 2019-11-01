@@ -13,7 +13,8 @@ public interface EmailDao {
 
     @Query(
             "SELECT *" +
-            "FROM Email"
+            "FROM Email " +
+            "ORDER BY eid DESC"
     )
     List<Email> loadAllEmail();
 }

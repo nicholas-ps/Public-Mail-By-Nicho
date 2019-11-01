@@ -6,6 +6,8 @@ import android.os.AsyncTask;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import id.ac.ui.cs.mobileprogramming.nicholas_priambodo.public_mail_by_nicho.model.AppDatabase;
@@ -17,18 +19,18 @@ public class InboxViewModel extends AndroidViewModel {
     private WebServicePublicMailByNicho webService;
     private MutableLiveData<List<Email>> live_list_email;
 
+    public InboxViewModel(Application application) {
+        super(application);
+        this.db = AppDatabase.getDatabase(application);
+        this.webService = new WebServicePublicMailByNicho(getApplication());
+    }
+
     public MutableLiveData<List<Email>> getLiveListEmail() {
         if (this.live_list_email == null) {
             this.live_list_email = new MutableLiveData<>();
         }
 
         return this.live_list_email;
-    }
-
-    public InboxViewModel(Application application) {
-        super(application);
-        this.db = AppDatabase.getDatabase(application);
-        this.webService = new WebServicePublicMailByNicho(getApplication());
     }
 
     public void getInboxFromWebService() {
@@ -43,6 +45,22 @@ public class InboxViewModel extends AndroidViewModel {
                     }
                 }
             );
+    }
+
+    public List<HashMap<String, String>> getListEmailInListHash() {
+        List<HashMap<String, String>> list = new ArrayList<>();
+
+        for (Email email : this.live_list_email.getValue()) {
+            HashMap<String, String> hash = new HashMap<>();
+
+            hash.put("sender", email.sender_email);
+            hash.put("subject", email.subject);
+            hash.put("content_preview", email.content);
+
+            list.add(hash);
+        }
+
+        return list;
     }
 
     private class AsyncTaskSaveEmail extends AsyncTask<List<Email>, Void, List<Email>> {
