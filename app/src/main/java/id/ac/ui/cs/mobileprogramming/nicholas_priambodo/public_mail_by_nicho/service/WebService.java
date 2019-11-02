@@ -2,14 +2,17 @@ package id.ac.ui.cs.mobileprogramming.nicholas_priambodo.public_mail_by_nicho.se
 
 import android.app.Service;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.IBinder;
 
 import androidx.annotation.Nullable;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import java.util.List;
 
+import id.ac.ui.cs.mobileprogramming.nicholas_priambodo.public_mail_by_nicho.broadcastReceiver.NotificationBroadcastReceiver;
 import id.ac.ui.cs.mobileprogramming.nicholas_priambodo.public_mail_by_nicho.model.AppDatabase;
 import id.ac.ui.cs.mobileprogramming.nicholas_priambodo.public_mail_by_nicho.model.email.Email;
 
@@ -18,6 +21,8 @@ public class WebService extends Service {
     Runnable runnable;
     AppDatabase db;
     PublicMailByNichoAPI api;
+    LocalBroadcastManager localBroadcastManager;
+    NotificationBroadcastReceiver notificationBroadcastReceiver;
 
     @Nullable
     @Override
@@ -29,6 +34,14 @@ public class WebService extends Service {
     public int onStartCommand(Intent intent, int flags, final int startId) {
         this.api = new PublicMailByNichoAPI(getApplicationContext());
         this.db = AppDatabase.getDatabase(getApplication());
+        this.notificationBroadcastReceiver = new NotificationBroadcastReceiver(getApplicationContext());
+        this.localBroadcastManager = LocalBroadcastManager.getInstance(getApplicationContext());
+
+        this.localBroadcastManager.registerReceiver(
+                this.notificationBroadcastReceiver,
+                new IntentFilter("NOTIFICATION_INTENT")
+        );
+
         this.handler = new Handler();
 
         this.runnable = new Runnable() {
@@ -51,6 +64,7 @@ public class WebService extends Service {
     @Override
     public void onDestroy() {
         this.handler.removeCallbacks(this.runnable);
+        this.localBroadcastManager.unregisterReceiver(this.notificationBroadcastReceiver);
     }
 
     private class AsyncTaskCallApiInbox extends AsyncTask<Void, Void, Void> {
@@ -81,6 +95,10 @@ public class WebService extends Service {
                 for (Email email : list_email) {
                     db.emailDao().insertEmail(email);
                 }
+
+                Intent intent = new Intent();
+                intent.setAction("NOTIFICATION_INTENT");
+                localBroadcastManager.sendBroadcast(intent);
             }
 
             return null;

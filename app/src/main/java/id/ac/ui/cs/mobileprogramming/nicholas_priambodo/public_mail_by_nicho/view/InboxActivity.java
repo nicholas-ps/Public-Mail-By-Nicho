@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -71,6 +73,7 @@ public class InboxActivity extends AppCompatActivity {
 
     public void onClickExitIcon(View view) {
         stopService(new Intent(this, WebService.class));
+        ((NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE)).cancelAll();
         new AsyncTaskDeleteAllData().execute();
     }
 

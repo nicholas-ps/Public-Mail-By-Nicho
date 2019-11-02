@@ -7,4 +7,5 @@
     <string name="warning_empty_text">username is empty</string>
     <string name="domain_email">publicmailbynicho</string>
     <string name="url_inbox">https://public-mail-by-nicho-api.herokuapp.com/mail/inbox</string>
+    <string name="notification_message">Inbox Updated!</string>
 </resources>
