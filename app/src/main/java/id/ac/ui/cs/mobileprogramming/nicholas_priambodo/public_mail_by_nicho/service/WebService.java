@@ -17,6 +17,7 @@ import id.ac.ui.cs.mobileprogramming.nicholas_priambodo.public_mail_by_nicho.mod
 import id.ac.ui.cs.mobileprogramming.nicholas_priambodo.public_mail_by_nicho.model.email.Email;
 
 public class WebService extends Service {
+    Intent notification_intent;
     Handler handler;
     Runnable runnable;
     AppDatabase db;
@@ -41,6 +42,8 @@ public class WebService extends Service {
                 this.notificationBroadcastReceiver,
                 new IntentFilter("NOTIFICATION_INTENT")
         );
+        this.notification_intent = new Intent();
+        this.notification_intent.setAction("NOTIFICATION_INTENT");
 
         this.handler = new Handler();
 
@@ -96,9 +99,7 @@ public class WebService extends Service {
                     db.emailDao().insertEmail(email);
                 }
 
-                Intent intent = new Intent();
-                intent.setAction("NOTIFICATION_INTENT");
-                localBroadcastManager.sendBroadcast(intent);
+                localBroadcastManager.sendBroadcast(notification_intent);
             }
 
             return null;
