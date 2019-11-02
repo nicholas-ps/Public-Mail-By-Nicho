@@ -15,6 +15,7 @@ import java.util.List;
 
 import id.ac.ui.cs.mobileprogramming.nicholas_priambodo.public_mail_by_nicho.R;
 import id.ac.ui.cs.mobileprogramming.nicholas_priambodo.public_mail_by_nicho.model.email.Email;
+import id.ac.ui.cs.mobileprogramming.nicholas_priambodo.public_mail_by_nicho.service.WebService;
 import id.ac.ui.cs.mobileprogramming.nicholas_priambodo.public_mail_by_nicho.viewmodel.InboxViewModel;
 
 public class InboxActivity extends AppCompatActivity {
@@ -29,20 +30,22 @@ public class InboxActivity extends AppCompatActivity {
         this.listView = findViewById(R.id.inbox);
         this.inboxViewModel = ViewModelProviders.of(this).get(InboxViewModel.class);
 
-        this.inboxViewModel.getLiveListEmail().observe(
+        this.inboxViewModel.getEmailLiveData().observe(
                 this,
                 new Observer<List<Email>>() {
                     @Override
                     public void onChanged(List<Email> list_email) {
-                        updateInbox();
+                        updateListViewInbox(list_email);
                     }
                 }
         );
 
-        new AsyncTaskInbox().execute();
+        stopService(new Intent(this, WebService.class));
+        startService(new Intent(this, WebService.class));
     }
 
-    private void updateInbox() {
+
+    private void updateListViewInbox(List<Email> list_email) {
         String[] from = {
                 "sender",
                 "subject",
@@ -57,7 +60,7 @@ public class InboxActivity extends AppCompatActivity {
 
         SimpleAdapter simpleAdapter = new SimpleAdapter(
                 this,
-                this.inboxViewModel.getListEmailInListHash(),
+                this.inboxViewModel.convertToListHash(list_email),
                 R.layout.list_email,
                 from,
                 to
@@ -66,15 +69,8 @@ public class InboxActivity extends AppCompatActivity {
         this.listView.setAdapter(simpleAdapter);
     }
 
-    private class AsyncTaskInbox extends AsyncTask<Void, Void, Void> {
-        @Override
-        protected Void doInBackground(Void... v) {
-            inboxViewModel.getInboxFromWebService();
-            return null;
-        }
-    }
-
     public void onClickExitIcon(View view) {
+        stopService(new Intent(this, WebService.class));
         new AsyncTaskDeleteAllData().execute();
     }
 

@@ -1,5 +1,6 @@
 package id.ac.ui.cs.mobileprogramming.nicholas_priambodo.public_mail_by_nicho.model.email;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
@@ -16,5 +17,14 @@ public interface EmailDao {
             "FROM Email " +
             "ORDER BY eid DESC"
     )
-    List<Email> loadAllEmail();
+    LiveData<List<Email>> loadAllEmail();
+
+    @Query("DELETE FROM email")
+    void deleteAllEmail();
+
+    @Query(
+            "SELECT COUNT(eid) " +
+            "FROM email"
+    )
+    int countAll();
 }

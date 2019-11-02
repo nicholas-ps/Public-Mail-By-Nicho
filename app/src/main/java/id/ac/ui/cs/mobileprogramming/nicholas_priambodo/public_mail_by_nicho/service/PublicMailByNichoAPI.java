@@ -1,4 +1,4 @@
-package id.ac.ui.cs.mobileprogramming.nicholas_priambodo.public_mail_by_nicho.model;
+package id.ac.ui.cs.mobileprogramming.nicholas_priambodo.public_mail_by_nicho.service;
 
 import android.content.Context;
 import android.util.Log;
@@ -18,13 +18,12 @@ import java.util.List;
 
 import id.ac.ui.cs.mobileprogramming.nicholas_priambodo.public_mail_by_nicho.R;
 import id.ac.ui.cs.mobileprogramming.nicholas_priambodo.public_mail_by_nicho.model.email.Email;
-import id.ac.ui.cs.mobileprogramming.nicholas_priambodo.public_mail_by_nicho.viewmodel.CallBackResponse;
 
-public class WebServicePublicMailByNicho {
+public class PublicMailByNichoAPI {
     private RequestQueue requestQueue;
     private String url_inbox;
 
-    public WebServicePublicMailByNicho(Context context) {
+    public PublicMailByNichoAPI(Context context) {
         this.requestQueue = Volley.newRequestQueue(context);
         this.url_inbox = context.getResources().getString(R.string.url_inbox);
     }
