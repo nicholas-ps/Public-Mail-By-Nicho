@@ -15,13 +15,7 @@ public class LoginViewModel extends AndroidViewModel {
         this.db = AppDatabase.getDatabase(application);
     }
 
-    public void resetDatabase() {
-        this.db.clearAllTables();
-    }
-
     public void createUser(String username) {
-        resetDatabase();
-
         User user = new User();
         user.username = username;
 

@@ -33,6 +33,22 @@ public class InboxViewModel extends AndroidViewModel {
         return this.live_list_email;
     }
 
+    public List<HashMap<String, String>> getListEmailInListHash() {
+        List<HashMap<String, String>> list = new ArrayList<>();
+
+        for (Email email : this.live_list_email.getValue()) {
+            HashMap<String, String> hash = new HashMap<>();
+
+            hash.put("sender", email.sender_email);
+            hash.put("subject", email.subject);
+            hash.put("content_preview", email.content);
+
+            list.add(hash);
+        }
+
+        return list;
+    }
+
     public void deleteAllData() {
         this.db.clearAllTables();
     }
@@ -49,22 +65,6 @@ public class InboxViewModel extends AndroidViewModel {
                     }
                 }
             );
-    }
-
-    public List<HashMap<String, String>> getListEmailInListHash() {
-        List<HashMap<String, String>> list = new ArrayList<>();
-
-        for (Email email : this.live_list_email.getValue()) {
-            HashMap<String, String> hash = new HashMap<>();
-
-            hash.put("sender", email.sender_email);
-            hash.put("subject", email.subject);
-            hash.put("content_preview", email.content);
-
-            list.add(hash);
-        }
-
-        return list;
     }
 
     private class AsyncTaskSaveEmail extends AsyncTask<List<Email>, Void, List<Email>> {
