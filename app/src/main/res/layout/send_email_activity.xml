@@ -99,7 +99,7 @@
         android:background="@color/colorPrimary"
         android:layout_margin="10dp"
         android:textColor="@color/colorWhite"
-        android:text="SEND"
+        android:text="@string/send_text"
         android:textStyle="bold"
         android:textSize="18sp"/>
 
