@@ -48,7 +48,8 @@
             app:layout_constraintBottom_toBottomOf="@+id/bar"
             app:layout_constraintLeft_toLeftOf="@+id/bar"
             app:layout_constraintRight_toRightOf="@id/bar"
-            app:layout_constraintHorizontal_bias="0.99"/>
+            app:layout_constraintHorizontal_bias="0.99"
+            android:onClick="onClickSendEmail"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

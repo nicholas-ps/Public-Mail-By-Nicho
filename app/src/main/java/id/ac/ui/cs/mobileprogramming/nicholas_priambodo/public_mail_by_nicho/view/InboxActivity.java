@@ -81,6 +81,10 @@ public class InboxActivity extends AppCompatActivity {
         new AsyncTaskDeleteAllData().execute();
     }
 
+    public void onClickSendEmail(View view) {
+        startActivity(new Intent(this, SendEmailActivity.class));
+    }
+
     private class AsyncTaskDeleteAllData extends AsyncTask<Void, Void, Void> {
         @Override
         public Void doInBackground(Void... v) {

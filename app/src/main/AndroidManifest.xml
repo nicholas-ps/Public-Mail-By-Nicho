@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="id.ac.ui.cs.mobileprogramming.nicholas_priambodo.public_mail_by_nicho">
+
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -10,8 +11,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".view.DetailEmailActivity"/>
-        <activity android:name=".view.InboxActivity"/>
+        <activity android:name=".view.SendEmailActivity" />
+        <activity android:name=".view.DetailEmailActivity" />
+        <activity android:name=".view.InboxActivity" />
         <activity android:name=".view.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -19,7 +21,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <service android:name=".service.WebService"/>
+
+        <service android:name=".service.WebService" />
     </application>
 
 </manifest>
