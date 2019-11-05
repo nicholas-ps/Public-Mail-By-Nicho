@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
@@ -23,6 +24,7 @@ import id.ac.ui.cs.mobileprogramming.nicholas_priambodo.public_mail_by_nicho.vie
 public class InboxActivity extends AppCompatActivity {
     private InboxViewModel inboxViewModel;
     private ListView listView;
+    private List<Email> list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +32,7 @@ public class InboxActivity extends AppCompatActivity {
         setContentView(R.layout.inbox_activity);
 
         this.listView = findViewById(R.id.inbox);
+        this.listView.setOnItemClickListener(new OnItemClickListener());
         this.inboxViewModel = ViewModelProviders.of(this).get(InboxViewModel.class);
 
         this.inboxViewModel.getEmailLiveData().observe(
@@ -37,6 +40,7 @@ public class InboxActivity extends AppCompatActivity {
                 new Observer<List<Email>>() {
                     @Override
                     public void onChanged(List<Email> list_email) {
+                        list = list_email;
                         updateListViewInbox(list_email);
                     }
                 }
@@ -90,6 +94,20 @@ public class InboxActivity extends AppCompatActivity {
                     new Intent(InboxActivity.this, LoginActivity.class)
             );
             finish();
+        }
+    }
+
+    private class OnItemClickListener implements AdapterView.OnItemClickListener {
+        @Override
+        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+            Email email = list.get(i);
+            Intent intent = new Intent(InboxActivity.this, DetailEmailActivity.class);
+
+            intent.putExtra("subject", email.subject);
+            intent.putExtra("sender_email", email.sender_email);
+            intent.putExtra("content", email.content);
+
+            startActivity(intent);
         }
     }
 }
