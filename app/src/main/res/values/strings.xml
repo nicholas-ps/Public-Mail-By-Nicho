@@ -7,8 +7,14 @@
     <string name="warning_empty_text">username is empty</string>
     <string name="domain_email">@publicmailbynicho.com</string>
     <string name="url_inbox">https://public-mail-by-nicho-api.herokuapp.com/mail/inbox</string>
+    <string name="url_send_email">https://public-mail-by-nicho-api.herokuapp.com/mail/send</string>
     <string name="notification_message">Inbox Updated!</string>
     <string name="to_text">To:</string>
     <string name="subject_text">Subject:</string>
     <string name="send_text">SEND</string>
+    <string name="receiver_empty_warning">Receiver is empty</string>
+    <string name="subject_empty_warning">Subject is empty</string>
+    <string name="content_empty_warning">Content is empty</string>
+    <string name="email_sent_text">Email sent</string>
+    <string name="no_connection_warning">No Internet Connection!</string>
 </resources>

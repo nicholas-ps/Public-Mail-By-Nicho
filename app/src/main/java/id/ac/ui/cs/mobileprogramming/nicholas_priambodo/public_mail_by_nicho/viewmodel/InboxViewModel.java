@@ -29,11 +29,13 @@ public class InboxViewModel extends AndroidViewModel {
             hashMap.put("sender", email.sender_email);
             hashMap.put("subject", email.subject);
 
-            if (email.content.length() > 100) {
-                hashMap.put("content_preview", email.content.substring(0, 100) + "...");
+            String content_preview = email.content.split("\n")[0];
+
+            if (content_preview.length() > 100) {
+                hashMap.put("content_preview", content_preview.substring(0, 100) + "...");
             }
             else {
-                hashMap.put("content_preview", email.content);
+                hashMap.put("content_preview", content_preview);
 
             }
 
