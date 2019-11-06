@@ -1,6 +1,5 @@
 package id.ac.ui.cs.mobileprogramming.nicholas_priambodo.public_mail_by_nicho.service;
 
-import android.app.Service;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.AsyncTask;
@@ -8,6 +7,8 @@ import android.os.Handler;
 import android.os.IBinder;
 
 import androidx.annotation.Nullable;
+import androidx.lifecycle.LifecycleService;
+import androidx.lifecycle.Observer;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import java.util.List;
@@ -15,8 +16,10 @@ import java.util.List;
 import id.ac.ui.cs.mobileprogramming.nicholas_priambodo.public_mail_by_nicho.broadcastReceiver.NotificationBroadcastReceiver;
 import id.ac.ui.cs.mobileprogramming.nicholas_priambodo.public_mail_by_nicho.model.AppDatabase;
 import id.ac.ui.cs.mobileprogramming.nicholas_priambodo.public_mail_by_nicho.model.email.Email;
+import id.ac.ui.cs.mobileprogramming.nicholas_priambodo.public_mail_by_nicho.model.setting.Setting;
 
-public class WebService extends Service {
+public class WebService extends LifecycleService {
+    int refresh_time;
     Intent notification_intent;
     Handler handler;
     Runnable runnable;
@@ -28,11 +31,14 @@ public class WebService extends Service {
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
+        super.onBind(intent);
         return null;
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, final int startId) {
+        super.onStartCommand(intent, flags, startId);
+
         this.api = new PublicMailByNichoAPI(getApplicationContext());
         this.db = AppDatabase.getDatabase(getApplication());
         this.notificationBroadcastReceiver = new NotificationBroadcastReceiver(getApplicationContext());
@@ -45,6 +51,16 @@ public class WebService extends Service {
         this.notification_intent = new Intent();
         this.notification_intent.setAction("NOTIFICATION_INTENT");
 
+        this.db.settingDao().getSetting().observe(
+                this,
+                new Observer<Setting>() {
+                    @Override
+                    public void onChanged(Setting setting) {
+                        refresh_time = setting.refresh_time;
+                    }
+                }
+        );
+
         this.handler = new Handler();
 
         this.runnable = new Runnable() {
@@ -54,7 +70,7 @@ public class WebService extends Service {
 
                 handler.postDelayed(
                         this,
-                        10000
+                        refresh_time
                 );
             }
         };
@@ -66,6 +82,8 @@ public class WebService extends Service {
 
     @Override
     public void onDestroy() {
+        super.onDestroy();
+
         this.handler.removeCallbacks(this.runnable);
         this.localBroadcastManager.unregisterReceiver(this.notificationBroadcastReceiver);
     }

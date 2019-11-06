@@ -8,14 +8,17 @@ import androidx.room.RoomDatabase;
 
 import id.ac.ui.cs.mobileprogramming.nicholas_priambodo.public_mail_by_nicho.model.email.Email;
 import id.ac.ui.cs.mobileprogramming.nicholas_priambodo.public_mail_by_nicho.model.email.EmailDao;
+import id.ac.ui.cs.mobileprogramming.nicholas_priambodo.public_mail_by_nicho.model.setting.Setting;
+import id.ac.ui.cs.mobileprogramming.nicholas_priambodo.public_mail_by_nicho.model.setting.SettingDao;
 import id.ac.ui.cs.mobileprogramming.nicholas_priambodo.public_mail_by_nicho.model.user.User;
 import id.ac.ui.cs.mobileprogramming.nicholas_priambodo.public_mail_by_nicho.model.user.UserDao;
 
-@Database(entities = {User.class, Email.class}, version = 1)
+@Database(entities = {User.class, Email.class, Setting.class}, version = 1)
 public abstract class AppDatabase extends RoomDatabase {
     private static AppDatabase db;
     public abstract UserDao userDao();
     public abstract EmailDao emailDao();
+    public abstract SettingDao settingDao();
 
     public static AppDatabase getDatabase(Context context) {
         if (db == null) {
