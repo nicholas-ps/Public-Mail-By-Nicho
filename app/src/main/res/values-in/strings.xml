@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Public Mail By Nicho</string>
+    <string name="icon_description">main icon</string>
+    <string name="username_text">Nama Pengguna</string>
+    <string name="hint_username_edit_view">Contoh: Clara</string>
+    <string name="button_inbox_text">Cek Kotak Masuk</string>
+    <string name="warning_empty_text">Nama Pengguna kosong</string>
+    <string name="domain_email">@publicmailbynicho.com</string>
+    <string name="url_inbox">https://public-mail-by-nicho-api.herokuapp.com/mail/inbox</string>
+    <string name="url_send_email">https://public-mail-by-nicho-api.herokuapp.com/mail/send</string>
+    <string name="notification_message">Kotak Masuk Telah di Update!</string>
+    <string name="to_text">Kepada:</string>
+    <string name="subject_text">Judul:</string>
+    <string name="send_text">KIRIM</string>
+    <string name="receiver_empty_warning">Penerima kosong</string>
+    <string name="subject_empty_warning">Judul kosong</string>
+    <string name="content_empty_warning">Konten kosong</string>
+    <string name="email_sent_text">Email telah dikirim</string>
+    <string name="no_connection_warning">Tidak ada koneksi Internet!</string>
+</resources>
