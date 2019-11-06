@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProviders;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -19,6 +20,8 @@ import java.util.List;
 import id.ac.ui.cs.mobileprogramming.nicholas_priambodo.public_mail_by_nicho.R;
 import id.ac.ui.cs.mobileprogramming.nicholas_priambodo.public_mail_by_nicho.model.email.Email;
 import id.ac.ui.cs.mobileprogramming.nicholas_priambodo.public_mail_by_nicho.service.WebService;
+import id.ac.ui.cs.mobileprogramming.nicholas_priambodo.public_mail_by_nicho.view.fragment.DetailEmailFragment;
+import id.ac.ui.cs.mobileprogramming.nicholas_priambodo.public_mail_by_nicho.view.fragment.InboxFragment;
 import id.ac.ui.cs.mobileprogramming.nicholas_priambodo.public_mail_by_nicho.viewmodel.InboxViewModel;
 
 public class InboxActivity extends AppCompatActivity {
@@ -31,20 +34,37 @@ public class InboxActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.inbox_activity);
 
-        this.listView = findViewById(R.id.inbox);
-        this.listView.setOnItemClickListener(new OnItemClickListener());
         this.inboxViewModel = ViewModelProviders.of(this).get(InboxViewModel.class);
 
-        this.inboxViewModel.getEmailLiveData().observe(
-                this,
-                new Observer<List<Email>>() {
-                    @Override
-                    public void onChanged(List<Email> list_email) {
-                        list = list_email;
-                        updateListViewInbox(list_email);
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+            this.listView = findViewById(R.id.inbox);
+            this.listView.setOnItemClickListener(new OnItemClickListener());
+
+            this.inboxViewModel.getListEmailLiveData().observe(
+                    this,
+                    new Observer<List<Email>>() {
+                        @Override
+                        public void onChanged(List<Email> list_email) {
+                            list = list_email;
+                            updateListViewInbox(list_email);
+                        }
                     }
-                }
-        );
+            );
+        }
+
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(
+                            R.id.list_view,
+                            new InboxFragment()
+                    )
+                    .replace(
+                            R.id.detail_view,
+                            new DetailEmailFragment()
+                    )
+                    .commit();
+        }
 
         stopService(new Intent(this, WebService.class));
         startService(new Intent(this, WebService.class));
@@ -105,6 +125,9 @@ public class InboxActivity extends AppCompatActivity {
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
             Email email = list.get(i);
+
+            inboxViewModel.getEmailLiveData().setValue(email);
+
             Intent intent = new Intent(InboxActivity.this, DetailEmailActivity.class);
 
             intent.putExtra("subject", email.subject);

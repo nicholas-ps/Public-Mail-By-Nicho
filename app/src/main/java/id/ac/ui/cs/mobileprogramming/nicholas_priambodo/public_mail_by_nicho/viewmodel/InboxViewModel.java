@@ -4,6 +4,7 @@ import android.app.Application;
 
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,10 +15,19 @@ import id.ac.ui.cs.mobileprogramming.nicholas_priambodo.public_mail_by_nicho.mod
 
 public class InboxViewModel extends AndroidViewModel {
     private AppDatabase db;
+    private MutableLiveData<Email> email_live_data;
 
     public InboxViewModel(Application application) {
         super(application);
         this.db = AppDatabase.getDatabase(application);
+    }
+
+    public MutableLiveData<Email> getEmailLiveData() {
+        if (this.email_live_data == null) {
+            this.email_live_data = new MutableLiveData<>();
+        }
+
+        return this.email_live_data;
     }
 
     public List<HashMap<String, String>> convertToListHash(List<Email> list_email) {
@@ -49,7 +59,7 @@ public class InboxViewModel extends AndroidViewModel {
         this.db.clearAllTables();
     }
 
-    public LiveData<List<Email>> getEmailLiveData() {
+    public LiveData<List<Email>> getListEmailLiveData() {
         return this.db.emailDao().loadAllEmail();
     }
 }
