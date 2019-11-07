@@ -17,4 +17,8 @@
     <string name="content_empty_warning">Content is empty</string>
     <string name="email_sent_text">Email sent</string>
     <string name="no_connection_warning">No Internet Connection!</string>
+    <string name="refresh_text">Refresh Time:</string>
+    <string name="ten_seconds_text">10 Seconds</string>
+    <string name="thirty_seconds_text">30 Seconds</string>
+    <string name="sixty_seconds_text">60 Seconds</string>
 </resources>

@@ -37,7 +37,8 @@
             app:layout_constraintBottom_toBottomOf="@+id/bar"
             app:layout_constraintRight_toRightOf="@+id/bar"
             app:layout_constraintLeft_toRightOf="@id/ic_action_exit"
-            app:layout_constraintHorizontal_bias="0.01"/>
+            app:layout_constraintHorizontal_bias="0.01"
+            android:onClick="onClickSettingIcon"/>
 
         <ImageView
             android:layout_width="30dp"

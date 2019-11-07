@@ -10,13 +10,23 @@ public interface SettingDao {
     @Insert
     void insertSetting(Setting setting);
 
-    @Query("DELETE FROM setting")
-    void deleteSetting();
+    @Query(
+            "UPDATE setting " +
+            "SET refresh_time = :refresh_time"
+    )
+    void updateSetting(int refresh_time);
+
+    @Query(
+            "SELECT * " +
+                    "FROM setting " +
+                    "LIMIT 1"
+    )
+    Setting getSetting();
 
     @Query(
             "SELECT * " +
             "FROM setting " +
             "LIMIT 1"
     )
-    LiveData<Setting> getSetting();
+    LiveData<Setting> getLiveDataSetting();
 }

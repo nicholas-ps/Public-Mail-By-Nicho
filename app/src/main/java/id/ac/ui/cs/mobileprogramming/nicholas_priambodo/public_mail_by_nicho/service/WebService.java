@@ -51,7 +51,7 @@ public class WebService extends LifecycleService {
         this.notification_intent = new Intent();
         this.notification_intent.setAction("NOTIFICATION_INTENT");
 
-        this.db.settingDao().getSetting().observe(
+        this.db.settingDao().getLiveDataSetting().observe(
                 this,
                 new Observer<Setting>() {
                     @Override

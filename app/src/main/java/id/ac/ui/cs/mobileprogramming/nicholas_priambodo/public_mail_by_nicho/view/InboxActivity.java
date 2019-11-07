@@ -101,6 +101,10 @@ public class InboxActivity extends AppCompatActivity {
         new AsyncTaskDeleteAllData().execute();
     }
 
+    public void onClickSettingIcon(View view) {
+        startActivity(new Intent(this, SettingActivity.class));
+    }
+
     public void onClickSendEmail(View view) {
         startActivity(new Intent(this, SendEmailActivity.class));
     }

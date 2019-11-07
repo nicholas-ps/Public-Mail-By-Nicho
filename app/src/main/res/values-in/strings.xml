@@ -18,4 +18,8 @@
     <string name="content_empty_warning">Konten kosong</string>
     <string name="email_sent_text">Email telah dikirim</string>
     <string name="no_connection_warning">Tidak ada koneksi Internet!</string>
+    <string name="refresh_text">Waktu Refresh:</string>
+    <string name="ten_seconds_text">10 Detik</string>
+    <string name="thirty_seconds_text">30 Detik</string>
+    <string name="sixty_seconds_text">60 Detik</string>
 </resources>

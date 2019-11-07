@@ -9,6 +9,7 @@ import id.ac.ui.cs.mobileprogramming.nicholas_priambodo.public_mail_by_nicho.mod
 import id.ac.ui.cs.mobileprogramming.nicholas_priambodo.public_mail_by_nicho.model.user.User;
 
 public class LoginViewModel extends AndroidViewModel {
+    private final int TEN_SECONDS = 10000;
     private AppDatabase db;
 
     public LoginViewModel(Application application) {
@@ -23,7 +24,7 @@ public class LoginViewModel extends AndroidViewModel {
         this.db.userDao().insertUser(user);
 
         Setting setting = new Setting();
-        setting.refresh_time = 10000; //default 10 seconds
+        setting.refresh_time = this.TEN_SECONDS; //default 10 seconds
 
         this.db.settingDao().insertSetting(setting);
     }
