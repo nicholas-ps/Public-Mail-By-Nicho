@@ -27,4 +27,5 @@
     <string name="write_external_storage_permission_explanation_title">Write External Storage Permission</string>
     <string name="write_external_storage_permission_explanation_message">External Storage is used to save your inbox as a text file</string>
     <string name="write_external_storage_permission_not_allow">Save failed, you do not allow Write External Storage Permission</string>
+    <string name="path_of_inbox_file">File is saved in</string>
 </resources>

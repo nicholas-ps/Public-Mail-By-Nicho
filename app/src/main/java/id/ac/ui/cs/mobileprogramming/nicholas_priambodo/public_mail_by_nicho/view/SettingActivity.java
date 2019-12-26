@@ -23,6 +23,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 import id.ac.ui.cs.mobileprogramming.nicholas_priambodo.public_mail_by_nicho.R;
+import id.ac.ui.cs.mobileprogramming.nicholas_priambodo.public_mail_by_nicho.model.email.Email;
 import id.ac.ui.cs.mobileprogramming.nicholas_priambodo.public_mail_by_nicho.viewmodel.SettingViewModel;
 
 public class SettingActivity extends AppCompatActivity {
@@ -100,7 +101,11 @@ public class SettingActivity extends AppCompatActivity {
 
     public void onClickSave(View view) {
         if (write_external_storage_is_allowed()) {
-            //TODO
+            if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+                new AsyncTaskSaveInbox().execute();
+            } else {
+                Toast.makeText(this, getResources().getString(R.string.external_storage_not_mounted_warning), Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
@@ -142,8 +147,46 @@ public class SettingActivity extends AppCompatActivity {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 onClickSave(null);
             } else {
-                Toast.makeText(this, getResources().getString(R.string.write_external_storage_permission_not_allow), Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getResources().getString(R.string.write_external_storage_permission_not_allow), Toast.LENGTH_LONG).show();
             }
+        }
+    }
+
+    private class AsyncTaskSaveInbox extends AsyncTask<Void, Void, String> {
+        @Override
+        protected String doInBackground(Void... v) {
+            String path = "";
+            try {
+                FileOutputStream writer = new FileOutputStream(
+                        new File(
+                                Environment.getExternalStorageDirectory().getAbsolutePath(),
+                                "Public Mail By Nicho - Inbox.txt"
+                        )
+                );
+
+                for (Email email : settingViewModel.getAllEmail()) {
+                    writer.write(
+                            String.format(
+                                    "%s\n%s\n%s\n\n",
+                                    email.sender_email,
+                                    email.subject,
+                                    email.content
+                            ).getBytes()
+                    );
+                }
+
+                writer.close();
+
+                path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Public Mail By Nicho - Inbox.txt";
+            } catch (IOException e) {
+                Log.e("IOException", e.toString());
+            }
+            return path;
+        }
+
+        @Override
+        protected void onPostExecute(String path) {
+            Toast.makeText(SettingActivity.this, getResources().getString(R.string.path_of_inbox_file) + " " + path, Toast.LENGTH_LONG).show();
         }
     }
 }

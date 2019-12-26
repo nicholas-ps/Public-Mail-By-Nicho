@@ -4,7 +4,10 @@ import android.app.Application;
 
 import androidx.lifecycle.AndroidViewModel;
 
+import java.util.List;
+
 import id.ac.ui.cs.mobileprogramming.nicholas_priambodo.public_mail_by_nicho.model.AppDatabase;
+import id.ac.ui.cs.mobileprogramming.nicholas_priambodo.public_mail_by_nicho.model.email.Email;
 
 public class SettingViewModel extends AndroidViewModel {
     private AppDatabase app;
@@ -20,5 +23,9 @@ public class SettingViewModel extends AndroidViewModel {
 
     public void updateRefreshTime(int refresh_time) {
         this.app.settingDao().updateSetting(refresh_time);
+    }
+
+    public List<Email> getAllEmail() {
+        return this.app.emailDao().loadEmail();
     }
 }

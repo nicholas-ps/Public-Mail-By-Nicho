@@ -27,4 +27,11 @@ public interface EmailDao {
             "FROM email"
     )
     int countAll();
+
+    @Query(
+            "SELECT *" +
+            "FROM Email " +
+            "ORDER BY eid DESC"
+    )
+    List<Email> loadEmail();
 }
