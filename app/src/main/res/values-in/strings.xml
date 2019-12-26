@@ -22,4 +22,6 @@
     <string name="ten_seconds_text">10 Detik</string>
     <string name="thirty_seconds_text">30 Detik</string>
     <string name="sixty_seconds_text">60 Detik</string>
+    <string name="save_inbox_to_file">Simpan Kotak Masuk ke dalam sebuah File di Penyimpanan Eksternal:</string>
+    <string name="save_text">SIMPAN</string>
 </resources>
