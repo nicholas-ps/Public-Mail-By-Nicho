@@ -24,4 +24,8 @@
     <string name="sixty_seconds_text">60 Detik</string>
     <string name="save_inbox_to_file">Simpan Kotak Masuk ke dalam sebuah File di Penyimpanan Eksternal:</string>
     <string name="save_text">SIMPAN</string>
+    <string name="external_storage_not_mounted_warning">Penyimpanan Eksternal tidak dipasang!</string>
+    <string name="write_external_storage_permission_explanation_title">Izin Menulis Penyimpanan Eksternal</string>
+    <string name="write_external_storage_permission_explanation_message">Penyimpanan Eksternal digunakan untuk menyimpan kotak masuk Anda sebagai file teks</string>
+    <string name="write_external_storage_permission_not_allow">Gagal menyimpan, Anda tidak mengizinkan Izin Penyimpanan Eksternal</string>
 </resources>

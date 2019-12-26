@@ -23,4 +23,8 @@
     <string name="sixty_seconds_text">60 Seconds</string>
     <string name="save_inbox_to_file">Save the Inbox to a File in External Storage:</string>
     <string name="save_text">SAVE</string>
+    <string name="external_storage_not_mounted_warning">External Storage not Mounted!</string>
+    <string name="write_external_storage_permission_explanation_title">Write External Storage Permission</string>
+    <string name="write_external_storage_permission_explanation_message">External Storage is used to save your inbox as a text file</string>
+    <string name="write_external_storage_permission_not_allow">Save failed, you do not allow Write External Storage Permission</string>
 </resources>
