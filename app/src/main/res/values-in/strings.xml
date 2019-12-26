@@ -30,4 +30,6 @@
     <string name="write_external_storage_permission_not_allow">Gagal menyimpan, Anda tidak mengizinkan Izin Penyimpanan Eksternal</string>
     <string name="path_of_inbox_file">File disimpan di</string>
     <string name="current_time_text">Waktu Saat Ini:</string>
+    <string name="network_available_title">Ketersediaan Jaringan</string>
+    <string name="network_available_message">Anda tidak terhubung ke jaringan apa pun, silakan hidupkan wifi atau jaringan aktif lainnya</string>
 </resources>

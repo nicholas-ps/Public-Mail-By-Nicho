@@ -3,7 +3,11 @@ package id.ac.ui.cs.mobileprogramming.nicholas_priambodo.public_mail_by_nicho.vi
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -21,9 +25,12 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        this.loginActivityViewModel = ViewModelProviders.of(this).get(LoginViewModel.class);
-
-        new AsyncTaskCheckUser().execute();
+        if (isNetworkActive()) {
+            this.loginActivityViewModel = ViewModelProviders.of(this).get(LoginViewModel.class);
+            new AsyncTaskCheckUser().execute();
+        } else {
+            displayMessageAndFinishActivity();
+        }
     }
 
     private void startInboxActivity() {
@@ -73,5 +80,32 @@ public class LoginActivity extends AppCompatActivity {
         protected void onPostExecute(Void v) {
             startInboxActivity();
         }
+    }
+
+    private boolean isNetworkActive() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(this.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        if (activeNetworkInfo != null) {
+            return activeNetworkInfo.isConnected();
+        }
+        return false;
+    }
+
+    private void displayMessageAndFinishActivity() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(getResources().getString(R.string.network_available_title))
+                .setMessage(getResources().getString(R.string.network_available_message))
+                .setPositiveButton(
+                        android.R.string.ok,
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                finish();
+                            }
+                        }
+                )
+                .create()
+                .show();
     }
 }
