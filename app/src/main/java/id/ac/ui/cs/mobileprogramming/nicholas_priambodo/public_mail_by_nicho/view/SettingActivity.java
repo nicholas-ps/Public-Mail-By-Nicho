@@ -16,6 +16,7 @@ import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
@@ -45,6 +46,8 @@ public class SettingActivity extends AppCompatActivity {
         new AsyncTaskCheckRadioButton().execute();
 
         this.radioGroup.setOnCheckedChangeListener(new OnCheckedChangeListener());
+
+        ((TextView) findViewById(R.id.current_time)).setText(currentTimeFromJNI());
     }
 
     private class AsyncTaskCheckRadioButton extends AsyncTask<Void, Void, Integer> {
@@ -189,4 +192,10 @@ public class SettingActivity extends AppCompatActivity {
             Toast.makeText(SettingActivity.this, getResources().getString(R.string.path_of_inbox_file) + " " + path, Toast.LENGTH_LONG).show();
         }
     }
+
+    static {
+        System.loadLibrary("native-lib");
+    }
+
+    public native String currentTimeFromJNI();
 }
